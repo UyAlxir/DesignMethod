@@ -1,0 +1,35 @@
+@startuml
+
+abstract class DataDealing {
+    {abstract} + String readData()
+    {abstract} + String cleanData()
+    {abstract} + String classifyData()
+    + void printResult()
+    + void DataDealing()
+}
+
+class DecisionTree extends DataDealing {
+    - String Path 
+    + DecisionTree( String path )
+    + String readData()
+    + cleanData()
+    + String classifyData()  
+}
+
+class KNearestNeighbors extends DataDealing { 
+    - String Path
+    + KNearestNeighbors( String path )
+    + String readData()
+    + cleanData()
+    + String classifyData()
+}
+
+class NavieBayes extends DataDealing { 
+    - String Path
+    + NavieBayes( String path )
+    + String readData()
+    + cleanData()
+    + String classifyData()
+}
+
+@enduml

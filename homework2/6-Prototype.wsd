@@ -1,0 +1,32 @@
+@startuml
+interface Product{
+    + void print()
+    + Product clone()
+    + Product deepclone()
+}
+
+class Photo{
+    - int size 
+}
+
+class Resume implements Product{
+    - String name
+    - int age 
+    - Photo photo 
+    + void setPhoto(int size)
+    + void print()
+    + Product clone()
+    + Product deepclone()
+}
+
+Resume *--> Photo
+
+class ResumeManager {
+    - HashMap<String, Resume> resumes
+    + saveResume(String name, Resume resume)
+    + Product copyResume(String name)
+    + Product cloneResume(String name)
+}
+
+ResumeManager *--> Resume 
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+
+interface Connection {
+    - void connect()
+}
+
+interface ConnectionFactory {
+    - Connection buildConnection() 
+}
+
+class HTTPConnection implements Connection{
+    + void connect()
+}
+
+class HTTPConnectionFactory implements ConnectionFactory{
+    + Connection buildConnection()
+}
+
+HTTPConnectionFactory --> HTTPConnection : crates
+
+class IMAPConnection implements Connection{
+    + void connect()
+}
+
+class IMAPConnectionFactory implements ConnectionFactory{ 
+    + Connection buildConnection()
+}
+
+IMAPConnectionFactory --> IMAPConnection : crates
+
+class POP3Connection implements Connection{
+    + void connect()
+}
+
+class POP3ConnectionFactory implements ConnectionFactory{
+    + Connection buildConnection()
+}   
+
+POP3ConnectionFactory --> POP3Connection : crates 
+
+@enduml

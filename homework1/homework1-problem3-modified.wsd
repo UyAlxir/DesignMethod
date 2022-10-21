@@ -1,0 +1,63 @@
+@startuml
+
+interface Modifier {
+    + void change(Item)
+    + void update()
+}
+
+abstract class Item{
+    - Modifier modifier
+    + Modifier getModifier() 
+}
+
+Modifier --* Item
+
+class Label extends Item{
+    + Label(Modifier)
+    + void update()
+}
+
+class TextBox extends Item{
+    + TextBox(Modifier)
+    + void update()
+    + void change()
+}
+
+class ComboBox extends Item{
+    + ComboBox(Modifier)
+    + void update()
+    + void change()
+}
+
+class List extends Item{
+    + List(Modifier)
+    + void update()
+    + void change()
+}
+
+class Button extends Item{
+    + Button(Modifier)
+    + void update()
+    + void change()
+}
+
+class Changes implements Modifier{
+    - List list 
+    - TextBox tb 
+    - ComboBox cb 
+    - Label label
+    + void setButton(Item)
+    + void setList(Item)
+    + void setComboBox(Item)
+    + void setTextBox(Item)
+    + void setLabel(Item)
+    + void change(Item)
+}
+
+Label o-- Changes
+TextBox o-- Changes
+ComboBox o-- Changes
+List o-- Changes
+Button o-- Changes
+
+@enduml

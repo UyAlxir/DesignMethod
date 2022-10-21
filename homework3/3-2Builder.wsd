@@ -1,0 +1,63 @@
+@startuml
+
+abstract class Builder{
+    {abstract} + void constructBegin()
+    {abstract} + void constructFinish()
+    {abstract} + void constructTire()
+    {abstract} + void constructEngine()
+    {abstract} + void constructBody()
+    {abstract} + void constructGearBox()
+}
+
+class Truck extends Builder{
+    + void constructBegin()
+    + void constructFinish()
+    + void constructTire()
+    + void constructGearBox()
+    + void constructEngine()
+    + void constructBody()
+} 
+
+class SportCar extends Builder{
+    + void constructBegin()
+    + void constructFinish()
+    + void constructTire()
+    + void constructGearBox()
+    + void constructEngine()
+    + void constructBody()
+}
+
+class FormulaRacing extends Builder{
+    + void constructBegin()
+    + void constructFinish()
+    + void constructTire()
+    + void constructGearBox()
+    + void constructEngine()
+    + void constructBody()
+}
+
+class OffRoadRacing extends Builder{
+    + void constructBegin()
+    + void constructFinish()
+    + void constructTire()
+    + void constructGearBox()
+    + void constructEngine()
+    + void constructBody()
+}
+
+class Director {
+    - Builder builder
+    + void construct()
+}
+
+Director *--> Builder
+
+class Test_3_2 {
+    {staric} + void Main()
+    {staric} + void Usage()
+    {staric} + void Builders()
+}
+
+Test_3_2 -l-> Director : creates
+
+@enduml

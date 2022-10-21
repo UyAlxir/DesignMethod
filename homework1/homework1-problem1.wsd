@@ -1,0 +1,45 @@
+@startuml
+
+class Pen{
+    # Color color
+    # Size size 
+    + void write()
+}
+
+interface Size {
+    + void setSize()
+}
+
+interface Color {
+    + void setColor()
+}
+
+class Small implements Size {
+    + void setSize()
+}
+
+class Mid implements Size {
+    + void setSize()
+}
+
+class Big implements Size {
+    + void setSize()
+}
+
+class Red implements Color{
+    + void setColor()
+}
+
+class Blue implements Color{
+    + void setColor()
+}
+
+class Black implements Color{
+    + void setColor()
+}
+
+Pen o-- Color
+Pen o-- Size
+
+
+@enduml

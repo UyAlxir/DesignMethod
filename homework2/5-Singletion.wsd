@@ -1,0 +1,26 @@
+@startuml
+class EagerSingletion{
+    {static} - EagerSingletion singletion
+    - EagerSingletion()
+    {static} + EagerSingletion getInstance()
+}
+
+class DoubleCheckLockedSingletion {
+    {static} -  DoubleCheckLockedSingletion singletion 
+    - DoubleCheckLockedSingletion()
+    {static} + DoubleCheckLockedSingletion getInstance()
+}
+
+class IoDHSingletion {
+    {static} - IoDHSingletion singletion
+    - IoDHSingletion()
+    {static} - IoDHSingletion getInstance()
+}
+
+class DemandHolder{
+    {static} - IoDHSingletion singletion 
+}
+
+DemandHolder --+ IoDHSingletion
+
+@enduml

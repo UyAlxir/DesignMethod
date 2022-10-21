@@ -1,0 +1,46 @@
+@startuml
+Object Client
+
+class createShape {
+    + Shape createShape(string shapeName)
+}
+
+Client -d- createShape
+
+abstract class Shape{
+    + void init()
+    + void setColor()
+    + void setSize()
+    + void fill()
+    + void display()
+}
+
+createShape ..> Shape
+
+class Circle extends Shape{
+    + void init()
+    + void setColor()
+    + void setSize()
+    + void fill()
+    + void display()
+}
+
+class Rectangle extends Shape{
+    + void init()
+    + void setColor()
+    + void setSize()
+    + void fill()
+    + void display()
+}
+
+class Triangle extends Shape{
+    + void init()
+    + void setColor() 
+    + void  setSize()
+    + void fill()
+    + void display()
+} 
+
+
+
+@enduml

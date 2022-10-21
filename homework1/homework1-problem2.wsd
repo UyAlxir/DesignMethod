@@ -1,0 +1,25 @@
+@startuml
+
+class employee {
+    - string ID 
+    - string name 
+    - int age 
+    - string gender 
+    - double salary
+
+    + void displaySalary()
+}
+
+class partTimeEmployee extends employee {
+    - int workHoursPerMonth
+
+    + double calcSalaryByHours() 
+}
+
+class fullTimeEmployee extends employee {
+    - int leaveDaysPerMonth
+
+    + double calcSalaryByDays() 
+}
+
+@enduml

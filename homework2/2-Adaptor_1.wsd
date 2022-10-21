@@ -1,0 +1,29 @@
+@startuml
+
+class encryption{
+    + String encrypt 
+    + Stirng decrypt
+}
+
+interface service {
+    + void save()
+    + String get()
+}
+
+class sql {
+    - Map map
+    + sql()
+    + void saveinfo()
+    + String getinfo()
+}
+
+class newSql extends sql implements service {
+    + void save()
+    + String get()
+}
+
+newSql --> encryption : uses
+
+
+
+@enduml

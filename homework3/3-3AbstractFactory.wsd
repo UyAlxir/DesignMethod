@@ -1,0 +1,63 @@
+@startuml
+
+package factory{
+    abstract class Connection{
+    {abstract} + void execute()
+}
+
+abstract class Statement{
+    {abstract} + void execute()
+}
+
+abstract class Factory{
+    {abstract} + Cennection createCennection()
+    {abstract} + Statement createStatement()
+}
+}
+
+Factory --> Connection : creates 
+Factory --> Statement : creates
+
+package mysqlFactory{
+    class mysqlConnection extends Connection{
+    + void execute()
+}
+
+class mysqlStatement extends Statement{
+    + void execute()
+}
+
+
+class mysql extends Factory{
+    + Connection createCennection()
+    + Statement createStatement()
+}
+
+}
+
+package oracleFactory {
+class oracleConnection extends Connection{
+    + void execute()
+}
+
+class oracleStatement extends Statement{
+    + void execute()
+}
+
+
+class oracle extends Factory{
+    + Connection createCennection()
+    + Statement createStatement()
+}
+}
+
+
+
+' mysql --> Connection : creates 
+' mysql --> Statement : creates
+' oracle --> Statement : creates 
+' oracle --> Connection : creates
+
+
+
+@enduml

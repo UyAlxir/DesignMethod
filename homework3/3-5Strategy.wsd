@@ -1,0 +1,26 @@
+@startuml
+
+interface CopyStrategy {
+    + void uses()
+}
+
+class PreCopy implements CopyStrategy {
+    + void uses()
+}
+
+class PostCopy implements CopyStrategy {
+    + void uses()
+}
+
+class CRRTCopy implements CopyStrategy {
+    + void uses()
+}
+
+class Copy{
+    - CopyStrategy copyStrategy
+    + void CopyFile()
+}
+
+Copy *-r-> CopyStrategy
+
+@enduml

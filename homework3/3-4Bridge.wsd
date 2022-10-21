@@ -1,0 +1,43 @@
+@startuml
+
+abstract class Image{
+    {abstract} + void print()
+}
+
+class Process {
+    - Image img
+    + Process(Image img)
+    + void imageProcess()
+}
+
+Process *-r-> Image
+
+class BMP extends Image{
+    + void print()
+}
+
+class JPG extends Image{
+    + void print()
+}
+
+class GIF extends Image{
+    + void print()
+}
+
+class Blur extends Process{
+    + void ProcessBlur()
+}
+
+class Cutout extends Process{
+    + void ProcessCutout()
+}
+
+class Sharpen extends Process{
+    + void ProcessSharpen()
+}
+
+class Texture extends Process{
+    + void ProcessTexture()
+}
+
+@enduml

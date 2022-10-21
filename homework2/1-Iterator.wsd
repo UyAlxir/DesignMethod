@@ -1,0 +1,39 @@
+@startuml
+
+interface Iterator {
+    + boolean hasNext()
+    + Object next()
+}
+
+interface Aggregate{
+    {abstract} + Iterator iterator()
+}
+
+Aggregate --> Iterator : creates
+
+class Page{
+    - String context
+    + Page()
+    + String getContext()
+}
+
+class Pages implements Aggregate{
+    + List<Page> pages
+    + Pages()
+    + Iterator iterator()
+    + int getLength()
+    + void add(Page page)
+    + Page getPage(int index)
+}
+
+Pages *--> Page 
+
+class PagesIterator implements Iterator{
+    - Pages pages
+    - int index 
+    + PagesIterator(Page page)
+    + boolean hasNext()
+    + Object next()
+}
+
+@enduml

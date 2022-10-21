@@ -1,0 +1,33 @@
+@startuml
+
+abstract class Shape{
+    {abstract} void draw();
+    {abstract} void erase();
+}
+
+class Circle extends Shape{
+    + void draw();
+    + void erase();
+}
+class Triangle extends Shape{
+    + void draw();
+    + void erase();
+}   
+class Rectangle extends Shape{
+    + void draw();
+    + void erase();
+}
+
+class ShapeFactory {
+    + Shape createASHape();
+}
+
+ShapeFactory --> Shape : creates
+
+class UnSopportiveShapeException extends Exception{
+
+}
+
+ShapeFactory --> UnSopportiveShapeException : throws
+
+@enduml

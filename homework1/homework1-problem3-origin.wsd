@@ -1,0 +1,53 @@
+@startuml
+
+class Label{
+    + void update()
+}
+
+class TexBox {
+    - List list 
+    - ComboBox cb 
+    + void change()
+}
+
+List o-l- TexBox
+ComboBox o-- TexBox
+
+
+class ComboBox {
+    - List list 
+    - TexBox tb 
+
+    + void change()
+    + void update()
+}
+
+List o-- ComboBox
+TexBox o-r- ComboBox
+
+class List {
+    - ComboBox cb
+    - TexBox tb
+
+    + void change()
+    + update()
+}
+
+class Button {
+    - List list
+    - ComboBox cb
+    - TexBox tb
+    - Label label
+    + void change()
+    + void update()
+}
+
+List o-- Button
+ComboBox o-- Button
+TexBox o-- Button
+Label o-u- Button
+ComboBox o-- List
+TexBox o-- List
+
+
+@enduml
