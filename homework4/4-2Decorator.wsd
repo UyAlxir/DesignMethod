@@ -1,0 +1,52 @@
+@startuml
+
+abstract class Display {
+    {abstract} ~ int getRows()
+    {abstract} ~ int getColumns()
+    {abstract} ~ int getLine( int )
+    + void showTable()
+}
+
+class Table extends Display {
+    - String[] table
+    + Table(String)
+    ~ int getRows()
+    ~ int getColumns()
+    ~ int getLine(int row)
+}
+
+abstract class Border extends Display {
+    - Display display
+    + Border(Display)
+}
+
+class Head extends Border{
+    - char ch
+    + Head(Display, char)
+    ~ int getRows()
+    ~ int getColumns()
+    ~ int getLine(int)
+}
+
+class Tail extends Border{
+    - char ch
+    + Tail(Display, char)
+    ~ int getRows()
+    ~ int getColumns()
+    ~ int getLine(int)
+}
+
+class Util {
+    {staic} ~ String MakeLine(int ,char )
+}
+
+Head --> Util : uses
+Tail --> Util : uses
+
+class Test{
+    {staic} + void Main()
+}
+
+Test -l-> Display : creates
+
+@enduml

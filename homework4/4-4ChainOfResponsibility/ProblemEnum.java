@@ -1,0 +1,3 @@
+public enum ProblemEnum {
+    CHARDECODE,DATATYPE,DATACORRECT,UNKNOWN
+}

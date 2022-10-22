@@ -1,0 +1,95 @@
+@startuml
+
+class MyAttributeTreatmentException extends Exception{
+    + MyAttributeTreatmentException()
+    + MyAttributeTreatmentException(String)
+}
+
+class MyCodeTreatmentException extends Exception{
+    + MyCodeTreatmentException()
+    + MyCodeTreatmentException(String)
+}
+
+abstract class Visitor{
+    {abstract} + void visit(MyCode)
+    {abstract} + void visit(MyClass)
+    {abstract} + void visit(MyMethod)
+    {abstract} + void visit(MyAttribute)
+}
+
+class CountVisitor extends Visitor{
+    + void visit(MyCode)
+    + void visit(MyClass)
+    + void visit(MyAttribute)
+    + void visit(MyAttribute)
+}
+
+class CheckNameVisitor extends  Visitor{
+    + void visit(MyCode)
+    + void visit(MyClass)
+    + void visit(MyAttribute)
+    + void visit(MyAttribute)
+}
+
+class RowsVisitor extends Visitor{
+    + void visit(MyCode)
+    + void visit(MyClass)
+    + void visit(MyAttribute)
+    + void visit(MyAttribute)
+}
+
+interface Element {
+    + void accept(Visitor)
+}
+
+abstract class Codes implements Element {
+    {abstract} + String getName()
+    {abstract} + void add(Codes)
+    {abstract} + int getRows() 
+    + Iterator iterator() 
+    + String toString()
+}
+
+class MyCode extends Codes{
+    - String name
+    - List<Codes> codesList
+    + Iterator iterator()
+    + int getRows() 
+    + String getName()
+    + void add(Codes)
+    + void accept(Visitor)
+}
+
+class MyClass extends Codes{
+    - String name
+    - List<Codes> codesList
+    + Iterator iterator()
+    + int getRows() 
+    + String getName()
+    + void add(Codes)
+    + void accept(Visitor)
+}
+
+class MyMethod extends Codes{
+    - String name
+    - List<Codes> codesList
+    + Iterator iterator()
+    + int getRows()
+    + String getName()
+    + void add(Codes)
+    + void accept(Visitor)
+}
+
+class MyAttribute extends Codes{
+    - String name
+    + int getRows()
+    + String getName()
+    + void add(Codes)
+    + void accept(Visitor)
+}
+
+Codes -l-> Exception : throws
+Visitor <-- Element : uses
+
+
+@enduml

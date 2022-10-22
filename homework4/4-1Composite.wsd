@@ -1,0 +1,36 @@
+@startuml
+
+class MemberTreatmentException extends Exception {
+    + MemberTreatmentException()
+    + MemberTreatmentException(String)
+}
+
+abstract class Entity{
+    ~ String name
+    + String getName()
+    {abstract} + int getSize()
+    + Entity add(Entity)
+    + void printList()
+    {abstract} ~ void printList(String)
+    {abstract} + String toString()
+}
+
+Entity --> MemberTreatmentException : throws
+
+class Member extends Entity{
+    + int getSize()
+    + Member(String name)
+    ~ void printList(String)
+    + String toString()
+}
+
+class Group extends Entity{
+    - List<Entity> entityList
+    + int getSize()
+    + Group(String name)
+    ~ void printList(String)
+    + String toString()
+    + Entity add(Entity)
+}
+
+@enduml

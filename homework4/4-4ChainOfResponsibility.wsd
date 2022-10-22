@@ -1,0 +1,60 @@
+@startuml
+
+abstract class Filter{
+    - String name
+    - Filter next 
+    + Filter(String)
+    + Filter setNext(Filter)
+    {abstract} ~ boolean solve(Problem)
+    + void Final(Problem)
+}
+
+enum ProblemEnum{
+    CHARDECODE
+    DATATYPE
+    DATACORRECT
+    UNKNOWN
+}
+
+class Problem{
+    - ProblemEnum problemEnum 
+    - String name
+    + Problem(String , ProblemEnum)
+    + String toString()
+    + ProblemEnum getProblemEnum()
+}
+
+class NoSupportFilter extends Filter{
+    + NoSupportFilter(String)
+    ~ solve(Problem)
+}
+
+class DataTypeFilter extends Filter{
+    - ProblemEnum problemEnum
+    + DataTypeFilter(String)
+    ~ solve(Problem)
+}
+
+class DataCorrectFilter extends Filter{
+    - ProblemEnum problemEnum
+    + DataCorrectFilter(String)
+    ~ solve(Problem)
+}
+
+class CharDecodeFilter extends Filter{
+    - ProblemEnum problemEnum
+    + CharDecodeFilter(String)
+    ~ solve(Problem)
+}
+
+DataTypeFilter o--> ProblemEnum
+DataCorrectFilter o--> ProblemEnum
+CharDecodeFilter o--> ProblemEnum
+Problem o--> ProblemEnum
+Filter ..> Problem
+Filter o--> Filter
+
+
+
+
+@enduml
