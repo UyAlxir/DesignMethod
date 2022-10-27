@@ -1,0 +1,43 @@
+@startuml
+
+class Memento {
+    - int size
+    - ArrayList list
+    # Memento()
+    # void addStr(String)
+    # List getList()
+}
+
+class MyStack {
+    - int size
+    - ArrayList list
+    # Memento getTop()
+    # void push(Memento)
+}
+
+class Editor{
+    - MyStack undoStack
+    - MyStack redoStack
+    - ArrayList arrayList
+    - int size
+    + Editor()
+    + Editor(List)
+    + Memento createMemento()
+    + void addStr(String)
+    + void Cover(Memento)
+    + void redo()
+    + void undo()
+    + void print()
+}
+
+MyStack o--> Memento
+Editor o-l-> MyStack
+Editor --> Memento : creates 
+
+class Test_5_4 {
+    {static} + void Main(String)
+}
+
+Test_5_4 --> Editor : creates 
+
+@enduml

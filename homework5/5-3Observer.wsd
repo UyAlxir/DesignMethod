@@ -1,0 +1,36 @@
+@startuml
+
+interface Staticer {
+    + void Update(TextEditor)
+}
+
+abstract class TextEditor{
+    - ArrayList staticerList
+    + TextEditor()
+    + void addStativer(Staticer)
+    + void radio()
+    {abstract} + String getText()
+    {abstract} + void execute()
+}
+
+class MyTextEditor extends TextEditor{
+    + String getText()
+    + void execute()
+}
+
+class Staticer1 implements Staticer{
+    + void Update(TextEditor)
+}
+
+class Staticer2 implements Staticer{
+    + void Update(TextEditor)
+}
+
+class Staticer3 implements Staticer{
+    + void Update(TextEditor)
+}
+
+TextEditor o--> Staticer 
+
+
+@enduml

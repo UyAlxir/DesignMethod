@@ -18,6 +18,11 @@
       <sourceFolder url="file://$MODULE_DIR$/homework4/4-2Decorator" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/homework4/4-3Visitor" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/homework4/4-4ChainOfResponsibility" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/homework5/5-1Facade" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/homework5/5-2Mediator" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/homework5/5-3Observer" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/homework5/5-4Momento" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/homework5/5-4Memento" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

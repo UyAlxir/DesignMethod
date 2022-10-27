@@ -1,0 +1,79 @@
+@startuml
+
+interface Mediator{
+    + void createSubsystem()
+    + void recieveInfo(String,SubSystem)
+    + void radio2SubSystem(String,SubSystem)
+}
+
+interface SubSystem {
+    - Mediator mediator
+    + void sentInfo(String)
+    + void recieveInfo(String)
+}
+
+class AirPortsSubSystem implements SubSystem {
+    - Mediator mediator
+    + AirPortsSubSystem(Mediator)
+    + void sentInfo(String)
+    + void recieveInfo(String)
+}
+
+class HotelsSubSystem implements SubSystem{
+    - Mediator mediator
+    + HotelsSubSystem(Mediator)
+    + void sentInfo(String)
+    + void recieveInfo(String)
+}
+class RavelCompaniesSubSystem implements SubSystem{
+    - Mediator mediator
+    + RavelCompaniesSubSystem(Mediator)
+    + void sentInfo(String)
+    + void recieveInfo(String)
+}
+
+class RestaurantsSubSystem implements SubSystem {
+    - Mediator mediator
+    + RavelCompaniesSubSystem(Mediator)
+    + void sentInfo(String)
+    + void recieveInfo(String)
+}
+
+class TourismAttractionsSubSystem implements SubSystem {
+    - Mediator mediator
+    + TourismAttractionsSubSystem(Mediator)
+    + void sentInfo(String)
+    + void recieveInfo(String)
+}
+
+class MainSystem implements Mediator{
+    - ArrayList subSystemList
+    - AirPortsSubSystem airPortsSubSystem
+    - HotelsSubSystem hotelsSubSystem
+    - RavelCompaniesSubSystem ravelCompaniesSubSystem
+    - RestaurantsSubSystem restaurantsSubSystem
+    - TourismAttractionsSubSystem tourismAttractionsSubSystem
+    + MainSystem()
+    + void createSubsystem()
+    + void recieveInfo(String,SubSystem)
+    + void radio2SubSystem(String,SubSystem)
+}
+
+Mediator o--> AirPortsSubSystem
+Mediator o--> HotelsSubSystem
+Mediator o--> RavelCompaniesSubSystem
+Mediator o--> RestaurantsSubSystem
+Mediator o--> TourismAttractionsSubSystem
+MainSystem <--o AirPortsSubSystem 
+MainSystem <--o HotelsSubSystem
+MainSystem <--o RavelCompaniesSubSystem
+MainSystem <--o RestaurantsSubSystem
+MainSystem <--o TourismAttractionsSubSystem
+
+class Test_5_2 {
+    {static} + void Main(String)
+}
+ 
+Test_5_2 --> MainSystem : creates 
+
+@enduml

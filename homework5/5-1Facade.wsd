@@ -1,0 +1,38 @@
+@startuml
+
+class AlbumManager{
+    {static} + String getProperty()
+}
+
+class ContactManager{
+    {static} + String getProperty()
+}
+
+class MessageManager{
+    {static} + String getProperty()
+}
+
+class MusicManager{
+    {static} + String getProperty()
+}
+
+class SDCard{
+    {static} + void Save(String)
+}
+
+class MMCCard{
+    {static} + void Save(String)
+}
+
+class BackUp{
+    {static} + void backUp();
+}
+
+BackUp --> AlbumManager : uses
+BackUp --> MusicManager : uses
+BackUp --> ContactManager : uses
+BackUp --> MessageManager : uses
+BackUp --> SDCard : uses
+BackUp --> MMCCard : uses
+
+@enduml
