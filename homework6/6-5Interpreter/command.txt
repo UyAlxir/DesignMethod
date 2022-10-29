@@ -1,0 +1,2 @@
+COPY VIEW FROM srcDB TO desDB
+MOVE TABLE Student FROM srcDB TO desDB

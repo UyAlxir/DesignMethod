@@ -1,0 +1,45 @@
+@startuml
+
+interface State{
+    + void request()
+}
+
+class Established implements State{
+    {static} - Established established 
+    - Established()
+    + void request()
+    {static} + State getInstance()
+}
+
+class Listening implements State{
+    {static} - Listening listening 
+    - Listening()
+    + void request()
+    {static} + State getInstance()
+}
+
+class Closed implements State{
+    {static} - Closed closed 
+    - Closed()
+    + void request()
+    {static} + State getInstance()
+}
+
+class TcpConnection {
+    - State state
+    + TcpConnection()
+    + void request()
+    + void setStateEstablished()
+    + void setStateListening()
+    + void setStateClosed()
+}
+
+TcpConnection o--> State
+
+class Test_6_1 {
+    {static} - void Main()
+}
+
+Test_6_1 --> TcpConnection : uses
+
+@enduml

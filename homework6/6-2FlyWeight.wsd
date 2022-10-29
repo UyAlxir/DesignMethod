@@ -1,0 +1,23 @@
+@startuml
+
+class Permission{
+    - String permission
+    + Permission
+}
+
+class PermissionFactory{
+    - HashMap<String,Permission> pool
+    {static} - String[] permissions
+    + String getPermission(String)
+    + void UserPermission(String)
+}
+
+class Test_6_2{
+    {static} - String Mian()
+}
+
+PermissionFactory o--> Permission : creates 
+Test_6_2 --> PermissionFactory : uses
+Test_6_2 --> Permission : Uses
+
+@enduml

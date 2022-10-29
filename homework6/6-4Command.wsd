@@ -1,0 +1,41 @@
+@startuml
+
+interface Command{
+    + void excute()
+}
+
+class Room {
+    - String room
+    - int state
+    + Room(String)
+    + int Swtich()
+    + String toString()
+}
+
+class Switch implements Command{
+    - String _switch
+    - Room room
+    + void excute()
+    + Switch(String)
+    + void setRoom()
+    + String toString()
+}
+
+class Switchs implements Command{
+    - Stack switchs
+    + Switchs()
+    + void excute()
+    + void addSwitch()
+    + String toString()
+    + void popSwitch()
+    + void clearSwtichs()
+}
+
+Switch o--> Room
+Switchs o-l-> Switch
+
+class Test_6_4
+Test_6_4 --> Command : creates 
+Test_6_4 --> Room : creates
+
+@enduml

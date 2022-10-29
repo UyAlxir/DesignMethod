@@ -1,0 +1,552 @@
+- Closed.java
+```java
+public class Closed implements State {
+
+    private static Closed closed = new Closed();
+
+    private Closed(){}
+
+    @Override
+    public void request() {
+        System.out.println("Requsted : Current State is [ "+ this.getClass().getName() + " ]");
+    }
+
+    public static State getInstance(){
+        return Closed.closed;
+    }
+}
+```
+
+- Established.java
+```java
+public class Established implements State {
+
+    private static Established established = new Established();
+
+    private Established(){}
+
+    @Override
+    public void request() {
+        System.out.println("Requsted : Current State is [ "+ this.getClass().getName() + " ]");
+    }
+
+    public static State getInstance(){
+        return Established.established;
+    }
+}
+```
+
+- Listening.java
+```java
+public class Listening implements State {
+
+    private static Listening listening = new Listening();
+
+    private Listening(){}
+
+    @Override
+    public void request() {
+        System.out.println("Requsted : Current State is [ "+ this.getClass().getName() + " ]");
+    }
+
+    public static State getInstance(){
+        return Listening.listening;
+    }
+}
+```
+
+- State.java
+```java
+public interface State {
+    public void request();
+}
+```
+
+- TcpConnection.java
+```java
+public class TcpConnection {
+    private State state;
+    public TcpConnection(){}
+    public void setStateEstablished(){
+        state = Established.getInstance();
+    }
+    public void setStateListening(){
+        state = Listening.getInstance();
+    }
+    public void setStateClosed(){
+        state = Closed.getInstance();
+    }
+    public void request(){
+        state.request();
+    }
+}
+```
+
+- Test_6_1.java
+```java
+public class Test_6_1 {
+    public static void main(String[] args) {
+        TcpConnection tcpConnection = new TcpConnection();
+        tcpConnection.setStateClosed();
+        tcpConnection.request();
+        tcpConnection.setStateEstablished();
+        tcpConnection.request();
+        tcpConnection.setStateListening();
+        tcpConnection.request();
+        tcpConnection.setStateClosed();
+        tcpConnection.request();
+    }
+}
+```
+
+- Permission.java
+```java
+public class Permission {
+    private String permission ;
+    public Permission(String permission){
+        this.permission=permission;
+    }
+
+
+
+    public String toString(){
+        return "[ " + permission + " ]";
+    }
+
+}
+```
+
+- PermissioonFactory.java
+```java
+import java.util.HashMap;
+
+public class PermissioonFactory {
+    private HashMap<String,Permission> pool ;
+    private static String[] permissions = {"Query","Add","Modify","Delete"};
+    public PermissioonFactory(){
+        pool=new HashMap<>();
+    }
+
+    public String getPermission( String permission ){
+        if(pool.containsKey(permission)){
+            return pool.get(permission).toString();
+        } else {
+            pool.put(permission,new Permission(permission));
+            return pool.get(permission).toString();
+        }
+    }
+
+    public void UsersPermission(String persmissons){
+        System.out.println("The Permissions of Current User are shown below :");
+        for(int i=0;i<4;i++){
+            if (persmissons.charAt(i)=='1'){
+                System.out.println(this.getPermission(PermissioonFactory.permissions[i]));
+            }
+        }
+        System.out.println("*******************************************\n");
+    }
+}
+```
+
+- Test_6_2.java
+```java
+public class Test_6_2 {
+    public static void main(String[] args) {
+        PermissioonFactory permissioonFactory = new PermissioonFactory();
+        permissioonFactory.UsersPermission("0000");
+        permissioonFactory.UsersPermission("1111");
+        permissioonFactory.UsersPermission("1010");
+        permissioonFactory.UsersPermission("0111");
+        permissioonFactory.UsersPermission("1001");
+    }
+}
+```
+
+- Queriable.java
+```java
+public interface Queriable {
+    public String Query(String query);
+}
+```
+
+- Query.java
+```java
+public class Query implements Queriable{
+    @Override
+    public String Query(String query) {
+        HeavyJob();
+        return "[ " + query + " ]";
+    }
+
+    private void HeavyJob(){
+        System.out.println("Asking from Query");
+        for(int i=0;i<10;i++){
+            try {
+                Thread.sleep(300);
+            } catch (Exception e) {
+            }
+            System.out.print(".");
+        }
+        System.out.println(" Done");
+    }
+}
+```
+
+- QueryProxy.java
+```java
+import java.util.HashMap;
+
+public class QueryProxy implements Queriable{
+    private HashMap<String,String> proxy;
+    public QueryProxy(){
+        proxy = new HashMap<>();
+    }
+    @Override
+    public String Query(String query) {
+        String re = null;
+        if(proxy.containsKey(query)){
+            re =proxy.get(query);
+        } else {
+            re = new Query().Query(query);
+            proxy.put(query,re);
+        }
+        System.out.println( "[ proxy Answered " + re + " ]");
+        return re;
+    }
+}
+```
+
+- Test_6_3.java
+```java
+
+public class Test_6_3 {
+    public static void main(String[] args) {
+        Queriable queryProxy = new QueryProxy();
+        queryProxy.Query("Query");
+        queryProxy.Query("Problem");
+        queryProxy.Query("Query");
+        queryProxy.Query("Question");
+        queryProxy.Query("Question");
+        queryProxy.Query("Problem");
+        queryProxy.Query("Answer");
+    }
+}
+```
+
+- Command.java
+```java
+public interface Command {
+    public void excute();
+}
+```
+
+- Room.java
+```java
+public class Room {
+    private String room;
+    private int state;
+    public Room(String room){
+        this.room = room;
+        this.state = 0;
+    }
+
+    public int Switch(){
+        state^=1;
+        return state;
+    }
+
+    public String toString(){
+        return "Room [ " + this.room + " ]";
+    }
+
+}
+```
+
+- Switch.java
+```java
+public class Switch implements Command{
+    private String _switch;
+    private Room room;
+    public Switch(String _switch){
+        this._switch = _switch;
+        this.room = null;
+    }
+
+    @Override
+    public void excute() {
+        System.out.println(this.room.toString() + " has been turned " + (this.room
+                .Switch()==1?"on":"off") +  " by " +  this.toString()  );
+    }
+
+    public void setRoom(Room room){
+        System.out.println("Switch [ " + this._switch + " ] controlling " + room.toString());
+        this.room = room;
+    }
+
+    public String toString(){
+        return "Switch [ " + this._switch + " ]";
+    }
+}
+```
+
+- Switchs.java
+```java
+import java.util.Iterator;
+import java.util.Stack;
+
+public class Switchs implements Command{
+
+    private Stack<Command> switches;
+
+    public Switchs(){
+        this.switches = new Stack<>();
+    }
+
+    @Override
+    public void excute() {
+        Iterator<Command> it = switches.iterator();
+        while(it.hasNext()){
+            it.next().excute();
+        }
+    }
+
+    public void addSwitch(Command switch_){
+        if(switch_ != this){
+            switches.push(switch_);
+        }
+    }
+
+    public void popSwitch(){
+        if(!switches.empty())switches.pop();
+    }
+
+    public void clearSwitchs(){
+        switches.clear();
+    }
+
+}
+```
+
+- Test_6_4.java
+```java
+public class Test_6_4 {
+    public static void main(String[] args) {
+        Switch s1 = new Switch("s1");
+        Room r1 = new Room("room1");
+        s1.setRoom(r1);
+        s1.excute();
+        s1.excute();
+        s1.excute();
+        Switch s2 = new Switch("s2"),s3 = new Switch("s3"),
+                s4 = new Switch("s4"),s5 = new Switch("r5");
+        Room r2=new Room("room2"),r3 = new Room("room3"),r4 = new Room("room4"),
+                r5 = new Room("room5"),r6 = new Room("room6");
+        s2.setRoom(r2);s3.setRoom(r3);s4.setRoom(r4);s5.setRoom(r5);
+        s2.excute();s4.excute();
+        Switchs switchs = new Switchs();
+        switchs.addSwitch(s1);switchs.addSwitch(s2);switchs.addSwitch(s3);
+        switchs.addSwitch(s4);switchs.addSwitch(s5);
+        switchs.excute();
+        s5.setRoom(r6);
+        s5.excute();s5.excute();s5.excute();
+    }
+}
+```
+
+- Action.java
+```java
+public class Action extends Node{
+    private Node Objects;
+    private String action;
+    @Override
+    public void parse(Context context) throws ParseException {
+        if(context.currentToken()==null){
+            throw new ParseException("Missing 'Action' ");
+        } else if(context.currentToken().equals("COPY")|| context.currentToken().equals("MOVE")){
+            action = context.currentToken();
+            Objects = new Objects();
+            context.nextToken();
+            Objects.parse(context);
+        } else {
+            throw new ParseException(context.currentToken() + " Action if undefiend");
+        }
+    }
+
+    public String toString(){
+        return "[ " + action + " " + Objects + "] ";
+    }
+}
+```
+
+- command.txt
+```java
+COPY VIEW FROM srcDB TO desDB
+MOVE TABLE Student FROM srcDB TO desDB```
+
+- Commands.java
+```java
+public class Commands extends Node{
+    private Node action;
+    @Override
+    public void parse(Context context) throws ParseException {
+        action = new Action();
+        action.parse(context);
+    }
+
+    @Override
+    public String toString() {
+        return "[ " + action + "] ";
+    }
+}
+```
+
+- Context.java
+```java
+import java.util.*;
+
+public class Context {
+    private StringTokenizer tokenizer;
+    private String currentToken;
+    public Context(String text) {
+        tokenizer = new StringTokenizer(text);
+        nextToken();
+    }
+    public String nextToken() {
+        if (tokenizer.hasMoreTokens()) {
+            currentToken = tokenizer.nextToken();
+        } else {
+            currentToken = null;
+        }
+        return currentToken;
+    }
+    public String currentToken() {
+        return currentToken;
+    }
+    public void skipToken(String token) throws ParseException {
+        if (!token.equals(currentToken)) {
+            throw new ParseException("Warning: " + token + " is expected, but " + currentToken + " is found.");
+        }
+        nextToken();
+    }
+    public int currentNumber() throws ParseException {
+        int number = 0;
+        try {
+            number = Integer.parseInt(currentToken);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Warning: " + e);
+        }
+        return number;
+    }
+}
+```
+
+- Node.java
+```java
+public abstract class Node {
+    public abstract void parse(Context context) throws ParseException;
+}
+```
+
+- Objects.java
+```java
+public class Objects extends Node{
+    private String object = null ;
+    private String Type;
+    private Node where;
+    @Override
+    public void parse(Context context) throws ParseException {
+        if(context.currentToken()==null){
+            throw new ParseException("Missing DataBase Type");
+        }
+        else if(context.currentToken().equals("VIEW")||context.currentToken().equals("TABLE")){
+            Type = context.currentToken();
+            context.nextToken();
+            if(!context.currentToken().equals("FROM")){
+              object = context.currentToken();
+              context.skipToken(object);
+            }
+            where = new Where();
+            where.parse(context);
+        } else {
+            throw new ParseException(context.currentToken() + " Database Type is undefined ");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "[ " + (object==null?("All " + Type + "s "):(Type + " " + object + " ")) + where + "] ";
+     }
+}
+```
+
+- ParseException.java
+```java
+public class ParseException extends Exception {
+    public ParseException(String msg) {
+        super(msg);
+    }
+}
+```
+
+- Test_6_5.java
+```java
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.management.BufferPoolMXBean;
+
+public class Test_6_5 {
+    public static void main(String[] args) throws IOException, ParseException {
+        String command ;
+        BufferedReader reader = new BufferedReader(new FileReader("homework6/6-5Interpreter/command.txt"));
+        while((command=reader.readLine())!=null){
+            System.out.println("command = " + command);
+            Node cmd = new Commands();
+            cmd.parse(new Context(command));
+            System.out.println("Node = " + cmd);
+        }
+    }
+}
+```
+
+- Where.java
+```java
+public class Where extends Node{
+    private String src;
+    private String dst;
+    @Override
+    public void parse(Context context) throws ParseException {
+        if(context.currentToken()==null){
+            throw new ParseException("Command not complete");
+        }
+        if(!context.currentToken().equals("FROM")){
+            throw new ParseException("Missign 'FROM'");
+        }
+        context.nextToken();
+        if(context.currentToken()==null){
+            throw new ParseException("Command not complete");
+        }
+        src = context.currentToken();
+        context.nextToken();
+        if(!context.currentToken().equals("TO")){
+            throw new ParseException("Missign 'TO'");
+        }
+        context.nextToken();
+        if(context.currentToken()==null){
+            throw new ParseException("Command not complete");
+        }
+        dst = context.currentToken();
+        context.nextToken();
+        if(context.currentToken()!=null){
+            throw new ParseException("command is wrong");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "[ FROM [ " + src + " ] TO [ " + dst + " ] ] ";
+    }
+}
+```
+

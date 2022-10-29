@@ -1,0 +1,22 @@
+@startuml
+
+interface Queriable {
+    + String Query(String)
+}
+
+class Query implements Queriable {
+    + String Query(String)
+    - void HeavyJob()
+}
+
+class QueryProxy implements Queriable {
+    - HashMap<String, String> proxy
+    + QueryProxy()
+    + String Query(String)
+}
+
+class Test_6_3 
+
+Test_6_3 --> Queriable : uses
+
+@enduml

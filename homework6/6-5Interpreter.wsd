@@ -1,0 +1,65 @@
+@startuml
+
+abstract class Node {
+    + void parse(Context)
+}
+
+class Where extends Node{
+    - String src
+    - String dst
+    + Where()
+    + void parse(Context)
+    + toString()
+}
+
+class Obejcts extends Node{
+    - Node where
+    - String Type
+    - String object
+    + Obejcts()
+    + void parse(Context)
+    + toString()
+}
+
+Obejcts o--> Node
+
+class Action extends Node{
+    - Node Obejcts
+    - String action
+    + Action()
+    + void parse(Context)
+    + toString()
+} 
+
+Action o--> Node
+
+class Commands extends Node{
+    - Node action
+    + Commands()
+    + void parse(Context)
+    + toString()
+}
+
+Commands o--> Node
+
+class ParseException extends Exception{
+    + ParseException(String)
+}
+
+Node --> ParseException : throws
+Test_6_5 --> Node : uses
+Test_6_5 --> Context : uses
+
+class Context {
+    - StringTokenizer tokenizer
+    - String currentToken
+    + Context(String)
+    + String nextToken()
+    + String currentToken()
+    + void skipToken()
+    + int currentNumber()
+}
+
+class Test_6_5 
+
+@enduml
